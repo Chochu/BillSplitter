@@ -6,13 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import androidx.annotation.Nullable;
+import com.gmail.bananacode.billsplitter.R;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
-
-import com.gmail.bananacode.billsplitter.R;
 
 public class DashboardFragment extends Fragment {
 
@@ -32,4 +32,5 @@ public class DashboardFragment extends Fragment {
         });
         return root;
     }
+
 }

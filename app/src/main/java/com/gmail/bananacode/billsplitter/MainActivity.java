@@ -31,11 +31,11 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
-
         initApp();
+
     }
 
-    Map<String,Person> personList;
+    Map<String, Person> personList;
     BillAssistant ba;
     EditText taxtb,tiptb;
 
@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
             taxtb.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
-                  ba.refresh(Double.parseDouble(taxtb.getText().toString()),Double.parseDouble(tiptb.getText().toString()));
+                    ba_refresh();
                 }
 
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
             tiptb.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
-                    ba.refresh(Double.parseDouble(taxtb.getText().toString()),Double.parseDouble(tiptb.getText().toString()));
+                    ba_refresh();
                 }
 
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -73,6 +73,12 @@ public class MainActivity extends AppCompatActivity {
                 public void onTextChanged(CharSequence s, int start, int before, int count) {}
             });
         }
+    }
+
+    public void ba_refresh(){
+        ba.refresh(Double.parseDouble( taxtb.getText().toString().isEmpty()? "0" : taxtb.getText().toString()),
+                Double.parseDouble( tiptb.getText().toString().isEmpty()? "0" : tiptb.getText().toString())
+        );
     }
 
     public void add_Person(String personName){

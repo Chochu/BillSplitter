@@ -29,7 +29,7 @@ public class Person {
     }
 
     public double get_TotalFinal(){
-        return (total * ba.tax) + (total * ba.tip);
+        return total + (total * ba.tax) + (total * ba.tip);
     }
 
     public double get_totaltip(){
