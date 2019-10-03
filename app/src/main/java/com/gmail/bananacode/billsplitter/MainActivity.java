@@ -5,10 +5,10 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
-import com.gmail.bananacode.billsplitter.ui.BillAssistant;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -35,22 +35,37 @@ public class MainActivity extends AppCompatActivity {
         initApp();
     }
 
-    ArrayList<Person> personList;
+    Map<String,Person> personList;
     BillAssistant ba;
+    EditText taxtb,tiptb;
 
     protected void initApp(){
         if (personList == null){
-            personList = new ArrayList<Person>();
-            ba = new BillAssistant();
-            yourEditText = (EditText) findViewById(R.id.yourEditTextId);
+            personList = new HashMap<>();
 
-            yourEditText.addTextChangedListener(new TextWatcher() {
+            ba = new BillAssistant();
+
+            personList.put("You",new Person("You",ba));
+
+            taxtb = findViewById(R.id.taxtb);
+            tiptb = findViewById(R.id.tiptb);
+
+            taxtb.addTextChangedListener(new TextWatcher() {
 
                 public void afterTextChanged(Editable s) {
+                  ba.refresh(Double.parseDouble(taxtb.getText().toString()),Double.parseDouble(tiptb.getText().toString()));
+                }
 
-                    // you can call or do what you want with your EditText here
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                    // yourEditText...
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            });
+
+
+            tiptb.addTextChangedListener(new TextWatcher() {
+
+                public void afterTextChanged(Editable s) {
+                    ba.refresh(Double.parseDouble(taxtb.getText().toString()),Double.parseDouble(tiptb.getText().toString()));
                 }
 
                 public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
@@ -60,13 +75,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    protected void add_Person(String personname){
-        PersonList.add(new Person(personname))
+    public void add_Person(String personName){
+        personList.put(personName,new Person(personName, ba));
     }
 
-    protected void remove_Person(String itemname){
-        double sub_amount = LItem.get(itemname);
-        LItem.remove(itemname);
-        total -= sub_amount;
+    public void remove_Person(String personName){
+        personList.remove(personName);
+    }
+
+    public double get_total(){
+        double finalTotal = 0.0;
+        for (Map.Entry<String,Person> entry : personList.entrySet()){
+            finalTotal += entry.getValue().get_TotalFinal();
+        }
+        return finalTotal;
     }
 }
