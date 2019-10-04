@@ -26,8 +26,8 @@
         android:layout_height="match_parent"
         app:defaultNavHost="true"
         app:navGraph="@navigation/mobile_navigation"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="91dp" />
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="92dp" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
@@ -40,8 +40,9 @@
         android:id="@+id/tiptb"
         android:layout_width="130dp"
         android:layout_height="70dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginLeft="4dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:gravity="center_horizontal"
         android:inputType="numberDecimal"
@@ -52,10 +53,36 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="15" />
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/tip_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="36dp"
+        android:text="@string/tax_label"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        app:fontFamily="monospace"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/taxtb"
         android:layout_width="130dp"
         android:layout_height="70dp"
+        android:layout_marginTop="4dp"
         android:ems="10"
         android:gravity="center_horizontal"
         android:inputType="numberDecimal"
@@ -66,44 +93,19 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="8.875" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/tip_label"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintStart_toStartOf="@+id/guideline2"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_begin="211dp" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="32dp"
-        android:text="@string/tax_label"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:fontFamily="monospace"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintGuide_begin="205dp" />
 
     <TextView
         android:id="@+id/text_dashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="8dp"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -112,5 +114,25 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:visibility="gone" />
+
+    <ScrollView
+        android:layout_width="408dp"
+        android:layout_height="543dp"
+        app:layout_constraintBottom_toTopOf="@+id/nav_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerv_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

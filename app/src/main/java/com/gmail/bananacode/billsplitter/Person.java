@@ -28,6 +28,10 @@ public class Person {
         total -= sub_amount;
     }
 
+    public String getName()  {
+        return name;
+    }
+
     public double get_TotalFinal(){
         return total + (total * ba.tax) + (total * ba.tip);
     }
