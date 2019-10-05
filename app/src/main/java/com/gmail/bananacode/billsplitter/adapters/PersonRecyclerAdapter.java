@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.gmail.bananacode.billsplitter.Person;
 import com.gmail.bananacode.billsplitter.R;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -23,6 +24,8 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
 
     private Map<String, Person> personList;
     private Context mContext;
+    private Map<Integer, String> position2Person = new HashMap<>();
+
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
@@ -63,17 +66,30 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
 //        Glide.with(mContext).asBitmap().load(mImages.get(position)).into(vh.personIcon);
+        Log.d(TAG, "onBindViewHolder: position" + position);
+        if(personList.size() != position2Person.size()) {
+            refresh_pos2Per();
+        }
 
-        holder.imageName.setText(personList.get(position).getName());
+        holder.imageName.setText(personList.get(position2Person.get(position)).getName());
 
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + personList.get(position).get_total());
+                Log.d(TAG, "onClick: clicked on: " + personList.get(position2Person.get(position)).get_total());
 
-                Toast.makeText(mContext,personList.get(position).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,personList.get(position2Person.get(position)).getName(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void refresh_pos2Per(){
+        position2Person = new HashMap<>();
+        int counter = 0;
+        for (Map.Entry<String, Person> e : personList.entrySet()) {
+            position2Person.put(counter,e.getKey());
+            counter++;
+        }
     }
 
     // Return the size of your dataset (invoked by the layout manager)

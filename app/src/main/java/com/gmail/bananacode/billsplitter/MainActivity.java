@@ -37,33 +37,42 @@ public class MainActivity extends AppCompatActivity {
             ba = new BillAssistant();
 
             personList.put("You",new Person("You",ba));
-
-            taxtb = findViewById(R.id.taxtb);
-            tiptb = findViewById(R.id.tiptb);
-
-            taxtb.addTextChangedListener(new TextWatcher() {
-
-                public void afterTextChanged(Editable s) {
-                    ba_refresh();
-                }
-
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            });
-
-
-            tiptb.addTextChangedListener(new TextWatcher() {
-
-                public void afterTextChanged(Editable s) {
-                    ba_refresh();
-                }
-
-                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-                public void onTextChanged(CharSequence s, int start, int before, int count) {}
-            });
         }
+
+
+        taxtb = findViewById(R.id.taxtb);
+        tiptb = findViewById(R.id.tiptb);
+
+        taxtb.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                ba_refresh();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+
+        tiptb.addTextChangedListener(new TextWatcher() {
+
+            public void afterTextChanged(Editable s) {
+                ba_refresh();
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+        });
+
+//        FloatingActionButton FAB = findViewById(R.id.addFAB);
+//        FAB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                m_Text = input.getText().toString();
+//            }
+//        });
     }
     
     private void initRecyclerView(){
