@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.gmail.bananacode.billsplitter.adapters.PersonRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -20,13 +23,16 @@ import androidx.navigation.ui.NavigationUI;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity  implements CustomDialog.CustomDialogListener {
 
     private static final String TAG = "MainActivity";
 
     Map<String, Person> personList;
     BillAssistant ba;
     EditText taxtb,tiptb;
+    PersonRecyclerAdapter adapter;
+
+    int coun = 0;
 
     protected void initApp(){
         Log.d(TAG, "initApp: Started.");
@@ -66,19 +72,38 @@ public class MainActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
-//        FloatingActionButton FAB = findViewById(R.id.addFAB);
-//        FAB.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                m_Text = input.getText().toString();
-//            }
-//        });
+        FloatingActionButton FAB =  findViewById(R.id.addFAB);
+        FAB.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                FAB_AddUser();
+            }
+        });
     }
-    
+
+    @Override
+    public void getDialogValue(String pValue) {
+        add_Person(pValue);
+    }
+
+    private void FAB_AddUser(){
+        Toast.makeText(getApplicationContext(),"HI",  Toast.LENGTH_SHORT).show();
+        Log.d(TAG, "onClick: FAB ");
+
+        Bundle args = new Bundle();
+        args.putString("Title", "Add name 2");
+        args.putString("ConfirmText", "Add");
+
+        CustomDialog CusDia = new CustomDialog();
+        CusDia.setArguments(args);
+        CusDia.show(getSupportFragmentManager(), "Add User");
+
+    }
+
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerview = findViewById(R.id.recyclerv_view);
-        PersonRecyclerAdapter adapter = new PersonRecyclerAdapter(personList, this);
+        adapter = new PersonRecyclerAdapter(personList, this);
         recyclerview.setAdapter(adapter);
         recyclerview.setLayoutManager(new LinearLayoutManager(this ));
     }
@@ -92,10 +117,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void add_Person(String personName){
         personList.put(personName,new Person(personName, ba));
+        adapter.notifyDataSetChanged();
     }
 
     public void remove_Person(String personName){
         personList.remove(personName);
+        adapter.notifyDataSetChanged();
     }
 
     public double get_total(){

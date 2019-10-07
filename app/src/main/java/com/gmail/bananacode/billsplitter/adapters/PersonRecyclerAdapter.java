@@ -78,7 +78,7 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
             public void onClick(View v) {
                 Log.d(TAG, "onClick: clicked on: " + personList.get(position2Person.get(position)).get_total());
 
-                Toast.makeText(mContext,personList.get(position2Person.get(position)).getName(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext,personList.get(position2Person.get(position)).getName() + String.valueOf(getItemCount()), Toast.LENGTH_SHORT).show();
             }
         });
     }
