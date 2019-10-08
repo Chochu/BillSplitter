@@ -6,7 +6,6 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.gmail.bananacode.billsplitter.adapters.PersonRecyclerAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -45,12 +44,10 @@ public class MainActivity extends AppCompatActivity  implements CustomDialog.Cus
             personList.put("You",new Person("You",ba));
         }
 
-
         taxtb = findViewById(R.id.taxtb);
         tiptb = findViewById(R.id.tiptb);
 
         taxtb.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable s) {
                 ba_refresh();
             }
@@ -62,7 +59,6 @@ public class MainActivity extends AppCompatActivity  implements CustomDialog.Cus
 
 
         tiptb.addTextChangedListener(new TextWatcher() {
-
             public void afterTextChanged(Editable s) {
                 ba_refresh();
             }
@@ -87,22 +83,22 @@ public class MainActivity extends AppCompatActivity  implements CustomDialog.Cus
     }
 
     private void FAB_AddUser(){
-        Toast.makeText(getApplicationContext(),"HI",  Toast.LENGTH_SHORT).show();
         Log.d(TAG, "onClick: FAB ");
 
         Bundle args = new Bundle();
-        args.putString("Title", "Add name 2");
+        args.putString("Title", "Add New User");
         args.putString("ConfirmText", "Add");
 
         CustomDialog CusDia = new CustomDialog();
         CusDia.setArguments(args);
-        CusDia.show(getSupportFragmentManager(), "Add User");
+        CusDia.show(getSupportFragmentManager(), "FAB_AddUser");
 
     }
 
     private void initRecyclerView(){
         Log.d(TAG, "initRecyclerView: init recyclerview");
         RecyclerView recyclerview = findViewById(R.id.recyclerv_view);
+
         adapter = new PersonRecyclerAdapter(personList, this);
         recyclerview.setAdapter(adapter);
         recyclerview.setLayoutManager(new LinearLayoutManager(this ));

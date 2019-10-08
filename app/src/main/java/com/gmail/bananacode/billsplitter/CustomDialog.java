@@ -33,9 +33,10 @@ public class CustomDialog extends AppCompatDialogFragment {
         }).setPositiveButton(getArguments().getString("ConfirmText"), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                String inputValue = uio_valueText.getText().toString();
-
-                listener.getDialogValue(inputValue);
+                if(!uio_valueText.getText().toString().isEmpty()) {
+                    String inputValue = uio_valueText.getText().toString();
+                    listener.getDialogValue(inputValue);
+                }
             }
         });
 

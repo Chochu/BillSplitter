@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,17 +30,41 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements  View.OnClickListener{
         // each data item
         CircleImageView image;
         TextView imageName;
         RelativeLayout parentLayout;
 
-        public ViewHolder(View itemView) {
+        MyClickListener listener;
+        Button delete;
+
+        public ViewHolder(View itemView, MyClickListener listener) {
             super(itemView);
             image = itemView.findViewById(R.id.personIcon);
             imageName = itemView.findViewById(R.id.image_name);
             parentLayout = itemView.findViewById(R.id.parent_layout);
+
+            this.listener = listener;
+
+            delete = (Button) itemView.findViewById(R.id.deletebutton);
+
+            delete.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.deletebutton:
+                    listener.onDelete(this.getLayoutPosition());
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        public interface MyClickListener {
+            void onDelete(int p);
         }
     }
 
@@ -54,7 +79,15 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // create a new view
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.layout_listitem, parent, false);
-        ViewHolder vh = new ViewHolder(view);
+        ViewHolder vh = new ViewHolder(view, new ViewHolder.MyClickListener() {
+
+            @Override
+            public void onDelete(int p) {
+                personList.remove(position2Person.get(p));
+                refresh_pos2Per();
+                notifyDataSetChanged();
+            }
+        });
         return vh;
     }
 
@@ -67,20 +100,25 @@ public class PersonRecyclerAdapter extends RecyclerView.Adapter<PersonRecyclerAd
         // - replace the contents of the view with that element
 //        Glide.with(mContext).asBitmap().load(mImages.get(position)).into(vh.personIcon);
         Log.d(TAG, "onBindViewHolder: position" + position);
-        if(personList.size() != position2Person.size()) {
-            refresh_pos2Per();
-        }
 
-        holder.imageName.setText(personList.get(position2Person.get(position)).getName());
-
-        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(TAG, "onClick: clicked on: " + personList.get(position2Person.get(position)).get_total());
-
-                Toast.makeText(mContext,personList.get(position2Person.get(position)).getName() + String.valueOf(getItemCount()), Toast.LENGTH_SHORT).show();
+        if(personList.size() != 0){
+            if(personList.size() != position2Person.size()) {
+                refresh_pos2Per();
             }
-        });
+
+            Log.d(TAG, "onBindViewHolder: "+ personList.size() + " Position2Person: "+ position2Person.size() + "Position" + position);
+
+            holder.imageName.setText(personList.get(position2Person.get(position)).getName());
+
+            holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.d(TAG, "onClick: clicked on: " + personList.get(position2Person.get(position)).get_total());
+
+                    Toast.makeText(mContext,personList.get(position2Person.get(position)).getName() + String.valueOf(getItemCount()), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     public void refresh_pos2Per(){
